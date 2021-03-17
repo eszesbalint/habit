@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("icons.css");
+@import url("calendar.css");
+@import url("content.css");
+@import url("collapsable.css");
+@import url("form.css");
+@import url("nav.css");
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: auto;
+    user-select: none;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.disabled {
+    opacity: 0.1; pointer-events: none;
+}
+
+.shadow {
+    box-shadow: 0pt 5pt 20pt rgba(0, 0, 0, 0.05);
+}

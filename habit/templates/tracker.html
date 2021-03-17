@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block header %}
+<div class="nav-bar">
+    <div class="nav-group">
+        <a href="#" class="nav-element hover material-icons">menu</a>
+    </div>
+    <div class="nav-group fill-space">
+        <a href="{{url_for('tracker', year=month.previous().year, month=month.previous().month)}}" class="nav-element hover material-icons">keyboard_arrow_left</a>
+        <span class="nav-element">{{ month.strftime("%B %Y") }}</span>
+        <a href="{{url_for('tracker', year=month.next().year, month=month.next().month)}}" class="nav-element hover material-icons">keyboard_arrow_right</a>
+    </div>
+    <div class="nav-group">
+        <a href="{{ url_for('new') }}" class="nav-element hover material-icons">add</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<main class="habit-grid">
+    {% for habit in current_user.habits %}
+    <div class="habit-container">
+        <div class="habit {{ habit.color }}">
+            <div class="nav-bar">
+                <div class="nav-group left-aligned fill-space bold">
+                    <a href="{{ url_for('edit', habit_id=habit.id) }}" class="nav-element hover">{{ habit.name }}</a>
+                </div>
+            </div>
+            {{ habit.get_calendar(month).render()|safe }}
+        </div>
+    </div>
+    {% endfor %}
+</main>
+<script src="{{ url_for('static', filename='js/socket.io.min.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ url_for('static', filename='js/connect.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ url_for('static', filename='js/check_clear.js') }}" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+

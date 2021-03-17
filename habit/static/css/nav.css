@@ -1,0 +1,55 @@
+.nav-element {
+    box-sizing: content-box;
+    min-width: 18pt;
+    height: 18pt;
+    margin: 0pt;
+    padding: 10pt;
+    text-decoration: none !important;
+    color:black;
+}
+
+.nav-element:not(.material-icons) {
+    font-size: 12pt;
+    line-height: 18pt;
+}
+
+.nav-element:visited {
+    color: unset;
+}
+
+.nav-group {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 30pt;
+    box-sizing: border-box;
+    width: 100%;
+    margin: auto;
+}
+
+.hover:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+
+.fill-space {
+    flex-grow: 1;
+}
+
+
+
+.wide {
+    max-width: 100%;
+}
+
+.left-aligned {
+    justify-content: left;
+}
+
+

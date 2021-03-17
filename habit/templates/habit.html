@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block header %}
+    {% if habit %}
+        <div class="nav-bar">
+            <div class="nav-group">
+                <a href="{{ url_for('tracker') }}" class="nav-element hover material-icons">arrow_back</a>
+            </div>
+            <div class="nav-group fill-space">
+                <span class="nav-element bold">Edit habit</span>
+            </div>
+            <div class="nav-group">
+                <span class="nav-element"></span>
+            </div>
+        </div>
+    {% else %}
+        <div class="nav-bar">
+            <div class="nav-group">
+                <a href="{{ url_for('tracker') }}" class="nav-element hover material-icons">arrow_back</a>
+            </div>
+            <div class="nav-group fill-space">
+                <span class="nav-element bold">New habit</span>
+            </div>
+            <div class="nav-group">
+                <span class="nav-element"></span>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <main style="width: 100%; max-width: 300pt; margin: auto;">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            {% if habit %}
+                {{ form.name(value=habit.name) }}
+                {{ form.color.label }}
+                <div class="color-picker shadow">
+                    {% for subfield in form.color %}
+                        <div class="color">
+                            {{ subfield }}
+                            <label for="{{ subfield.id }}" class="nav-element {{ subfield.data }}">
+                                <i class="material-icons">check</i>
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="nav-bar">
+                    <div class="nav-group">
+                        {{ form.submit(class="material-icons nav-element") }}
+                    </div>
+                    <div class="nav-group fill-space"></div>
+                    <div class="nav-group">
+                        <a href="{{ url_for('delete', habit_id=habit.id) }}" class="nav-element hover material-icons">delete</a>
+                    </div>
+                </div>
+            {% else %}
+                {{ form.name }}
+                {{ form.color.label }}
+                <div class="color-picker shadow">
+                    {% for subfield in form.color %}
+                        <div class="color">
+                            {{ subfield }}
+                            <label for="{{ subfield.id }}" class="nav-element {{ subfield.data }}">
+                                <i class="material-icons">check</i>
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="nav-bar">
+                    <div class="nav-group">
+                        {{ form.submit(class="material-icons nav-element") }}
+                    </div>
+                </div>
+            {% endif %}
+        </form>
+    </main>
+{% endblock %}
+

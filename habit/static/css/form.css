@@ -1,0 +1,122 @@
+form {
+    padding: 5pt;
+}
+
+form :is(input[type="text"], input[type="password"]) {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10pt;
+    margin-top: 5pt;
+    margin-bottom: 5pt;
+    border: none;
+    border-bottom: 2pt solid rgba(0, 0, 0, 0.2);
+    color: rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+form :is(input[type="text"], input[type="password"]):focus {
+    outline: none;
+    border-bottom: 2pt solid rgba(0, 0, 0, 1);
+    color: rgba(0, 0, 0, 1);
+}
+
+form label {
+    display: block;
+    padding: 5pt;
+    font-size: 10pt;
+    font-weight: bold;
+    margin: auto;
+    width: 100pt;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.2);
+}
+
+form input[type="submit"] {
+    border: none;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+}
+
+.color-picker {
+    display: grid;
+    grid-template-columns: repeat( auto-fill,  minmax(min(100%, 60pt), 1fr ));
+    gap: 5pt;
+}
+
+.color-picker .color {
+    height: 0pt;
+    padding-top: 100%;
+    position: relative;
+}
+
+.color-picker .nav-element {
+    display: flex;
+    box-sizing: border-box;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.color-picker input {
+    display: none;
+}
+
+.color-picker input + label i {
+    display: none;
+}
+
+
+.color-picker input:checked + label i {
+    display: inline;
+}
+
+.color-picker input + label.black {
+    background-color: var(--black);
+}
+
+.color-picker input + label.red {
+    background-color: var(--red);
+}
+
+.color-picker input + label.tangerine {
+    background-color: var(--tangerine);
+}
+
+.color-picker input + label.orange {
+    background-color: var(--orange);
+}
+
+.color-picker input + label.peach {
+    background-color: var(--peach);
+}
+
+.color-picker input + label.yellow {
+    background-color: var(--yellow);
+}
+
+.color-picker input + label.green {
+    background-color: var(--green);
+}
+
+.color-picker input + label.cyan {
+    background-color: var(--cyan);
+}
+
+.color-picker input + label.teal {
+    background-color: var(--teal);
+}
+
+.color-picker input + label.indigo {
+    background-color: var(--indigo);
+}
+
+.color-picker input + label.blue {
+    background-color: var(--blue);
+}

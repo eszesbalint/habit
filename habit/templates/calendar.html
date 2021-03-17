@@ -1,0 +1,40 @@
+
+<div class="calendar" id="{{ calendar.id }}">
+    <div class="week">
+        {% for week_day in calendar.week_days %}
+            <div class="day">
+                {{ week_day }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="days">
+        {% for date in range(calendar.offset) %}
+            <div class="day"></div>
+        {% endfor %}
+        {% for date in calendar.dates %}
+            <input 
+                type="checkbox" 
+                id="{{ calendar.id }}_{{ date.day }}" 
+                data-calendar-id="{{ calendar.id }}"
+                data-day="{{ date.day }}"
+                onchange="toggle(this)"
+                {% if calendar[date] %}checked{% endif %}
+                >
+            <label 
+                class="
+                    day 
+                    {% if date < current_user.date %}
+                        past
+                    {% elif date > current_user.date %}
+                        future
+                    {% else %}
+                        today
+                    {% endif %}
+                    " 
+                for="{{ calendar.id }}_{{ date.day }}"
+                >
+                {{ date.day }}
+            </label>
+        {% endfor %}
+    </div>
+</div>
