@@ -16,18 +16,19 @@
 
 {% block content %}
 <main style="width: 100%; max-width: 300pt; margin: auto;">
-    {% with form=login_form %}
+    {% with form=register_form %}
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         {{ form.email }} {{ form.email.label }}
         {{ form.password }} {{ form.password.label }}
+        {{ form.password_check }} {{ form.password_check.label }}
         <div class="nav-bar">
             <div class="nav-group">
                 {{ form.submit(class="nav-element") }}
             </div>
             <div class="nav-group fill-space"></div>
             <div class="nav-group">
-                <a href="{{ url_for('sign_up') }}" class="nav-element hover">Sign up</a>
+                <a href="{{ url_for('login') }}" class="nav-element hover">Login</a>
             </div>
         </div>
     </form>

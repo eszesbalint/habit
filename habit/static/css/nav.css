@@ -1,14 +1,14 @@
 .nav-element {
     box-sizing: content-box;
     min-width: 18pt;
-    height: 18pt;
+    min-height: 18pt;
     margin: 0pt;
     padding: 10pt;
     text-decoration: none !important;
     color:black;
 }
 
-.nav-element:not(.material-icons) {
+.nav-element:not(.material-icons,small) {
     font-size: 12pt;
     line-height: 18pt;
 }
@@ -50,6 +50,10 @@
 
 .left-aligned {
     justify-content: left;
+}
+
+.right-aligned {
+    justify-content: right;
 }
 
 

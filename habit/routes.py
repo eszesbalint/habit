@@ -6,7 +6,7 @@ from flask_login import (current_user, login_required,
 from habit import app, db, bcrypt
 from habit.user import User
 from habit.forms import RegisterForm, LoginForm, HabitForm
-from habit.calendar import Habit, Calendar
+from habit.habit import Habit, DataBlock
 import habit.events
 from habit.month import Month as m
 
@@ -53,26 +53,13 @@ def new():
 
 @app.route("/delete/<int:habit_id>", methods=["GET", "POST"])
 def delete(habit_id=None):
-    Habit.query.filter_by(id=habit_id).delete()
-    Calendar.query.filter_by(habit_id=habit_id).delete()
-    db.session.commit()
+    current_user.delete_habit(habit_id)
     return redirect(url_for("tracker"))
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     login_form = LoginForm()
-    register_form = RegisterForm()
-
-    if register_form.validate_on_submit():
-        e = register_form.email.data
-        p = register_form.password.data
-        h = bcrypt.generate_password_hash(p)
-        h = h.decode("utf-8")
-        new_user = User(email=e, password=h)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('login'))
 
     if login_form.validate_on_submit():
         e = login_form.email.data
@@ -86,6 +73,24 @@ def login():
     return render_template(
         "login.html", 
         login_form=login_form,
+        )
+
+@app.route("/signup", methods=["GET", "POST"])
+def sign_up():
+    register_form = RegisterForm()
+
+    if register_form.validate_on_submit():
+        e = register_form.email.data
+        p = register_form.password.data
+        h = bcrypt.generate_password_hash(p)
+        h = h.decode("utf-8")
+        new_user = User(email=e, password=h)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('login'))
+
+    return render_template(
+        "signup.html", 
         register_form=register_form
         )
 

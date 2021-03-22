@@ -17,22 +17,12 @@
 {% endblock %}
 
 {% block content %}
-<main class="habit-grid">
+<main class="habit-grid" id="habit-grid">
     {% for habit in current_user.habits %}
-    <div class="habit-container">
-        <div class="habit {{ habit.color }}">
-            <div class="nav-bar">
-                <div class="nav-group left-aligned fill-space bold">
-                    <a href="{{ url_for('edit', habit_id=habit.id) }}" class="nav-element hover">{{ habit.name }}</a>
-                </div>
-            </div>
-            {{ habit.get_calendar(month).render()|safe }}
-        </div>
-    </div>
+        {{ habit.render(month)|safe }}
     {% endfor %}
 </main>
 <script src="{{ url_for('static', filename='js/socket.io.min.js') }}" type="text/javascript" charset="utf-8"></script>
-<script src="{{ url_for('static', filename='js/connect.js') }}" type="text/javascript" charset="utf-8"></script>
-<script src="{{ url_for('static', filename='js/check_clear.js') }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ url_for('static', filename='js/events.js') }}" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 

@@ -1,40 +1,59 @@
-
-<div class="calendar" id="{{ calendar.id }}">
-    <div class="week">
-        {% for week_day in calendar.week_days %}
-            <div class="day">
-                {{ week_day }}
+<div class="habit-container shadow" id="habit-container_{{ habit.id }}">
+    <div class="habit {{ habit.color }}">
+        <div class="nav-bar">
+            <div class="nav-group left-aligned bold">
+                <a href="{{ url_for('edit', habit_id=habit.id) }}" class="nav-element hover">{{ habit.name }}</a>
+                
             </div>
-        {% endfor %}
-    </div>
-    <div class="days">
-        {% for date in range(calendar.offset) %}
-            <div class="day"></div>
-        {% endfor %}
-        {% for date in calendar.dates %}
-            <input 
-                type="checkbox" 
-                id="{{ calendar.id }}_{{ date.day }}" 
-                data-calendar-id="{{ calendar.id }}"
-                data-day="{{ date.day }}"
-                onchange="toggle(this)"
-                {% if calendar[date] %}checked{% endif %}
-                >
-            <label 
-                class="
-                    day 
-                    {% if date < current_user.date %}
-                        past
-                    {% elif date > current_user.date %}
-                        future
-                    {% else %}
-                        today
-                    {% endif %}
-                    " 
-                for="{{ calendar.id }}_{{ date.day }}"
-                >
-                {{ date.day }}
-            </label>
-        {% endfor %}
+            <div class="nav-group fill-space right-aligned">
+                
+                <a href="" class="nav-element hover material-icons disabled">alarm</a>
+            </div>
+        </div>
+        <div class="calendar">
+            <div class="week">
+                {% for week_day in week_days %}
+                    <small class="day">
+                        {{ week_day }}
+                    </small>
+                {% endfor %}
+            </div>
+            <div class="days">
+                {% for date in range(month.weekday()) %}
+                    <div class="day"></div>
+                {% endfor %}
+                {% for date in month.dates %}
+                    <input 
+                        type="checkbox" 
+                        id="{{ habit.id }}_{{ date.year }}_{{ date.month }}_{{ date.day }}" 
+                        data-habit-id="{{ habit.id }}"
+                        data-year="{{ date.year }}"
+                        data-month="{{ date.month }}"
+                        data-day="{{ date.day }}"
+                        onchange="toggle(this)"
+                        {% if habit[date] %}checked{% endif %}
+                        autocomplete="off"
+                        >
+                    <label 
+                        class="
+                            day 
+                            {% if date < current_user.date %}
+                                past
+                            {% elif date > current_user.date %}
+                                future
+                            {% else %}
+                                today
+                            {% endif %}
+                            {% if habit.predict(date) %}
+                                predicted
+                            {% endif %}
+                            " 
+                        for="{{ habit.id }}_{{ date.year }}_{{ date.month }}_{{ date.day }}"
+                        >
+                        {{ date.day }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>

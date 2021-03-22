@@ -12,12 +12,21 @@ body {
     user-select: none;
 }
 
+small {
+    font-size: 8pt;
+}
+
 .bold {
     font-weight: bold;
 }
 
 .disabled {
-    opacity: 0.1; pointer-events: none;
+    opacity: 0.1; 
+    pointer-events: none;
+}
+
+.inactive {
+    pointer-events: none;
 }
 
 .shadow {

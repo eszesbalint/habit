@@ -10,6 +10,9 @@
 | Szokás törlése | x |
 | Színek implementálása | x |
 | Nav-bar makró nélkül | x |
+| Frekvencia detektálás | x |
+| Dinamikusan megjelenített naptárak |  |
+| Prediktív tervezés |  |
 
 
 ## Célkitűzés

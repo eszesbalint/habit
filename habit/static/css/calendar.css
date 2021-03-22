@@ -17,7 +17,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat( auto-fill, minmax(min(100%, 250pt), 1fr) );
-    gap: 30pt;
+    gap: 15pt;
     padding: 1vw;
 }
 
@@ -62,7 +62,6 @@
 .calendar .week .day {
     padding: 5pt;
     text-align: center;
-    font-size: 8pt;
     color: rgba(0, 0, 0, 0.2);
 }
 
@@ -72,6 +71,10 @@
     align-items: center;
     padding: 5pt;
     position: relative;
+    background-attachment: fixed;
+    background-repeat: repeat;
+    transition: background-color 0.5s ease-in-out,
+                           color 0.5s ease-in-out;
 }
 
 
@@ -80,15 +83,40 @@
 }
 
 .calendar .future {
-    opacity: 0.2;
+    opacity: 0.3;
+}
+
+.calendar .predicted {
+    background: repeating-linear-gradient(
+      30deg,
+      rgba(0,0,0,0.2),
+      rgba(0,0,0,0.1) 80px,
+      rgba(0,0,0,0.1) 80px,
+      rgba(0,0,0,0.2) 160px
+    );
+    background-attachment: fixed;
+    background-repeat: repeat;
 }
 
 .calendar input {
     display: none;
 }
 
+.calendar input:checked + .day.today {
+    border: 2pt solid white;
+}
+
 .calendar input:checked + .day {
     background-color: var(--black);
+    background: repeating-linear-gradient(
+      30deg,
+      rgba(234, 0, 255, 0.2),
+      rgba(0,0,0,0.0) 200pt,
+      rgba(0,0,0,0.0) 200pt,
+      rgba(234, 0, 255, 0.2) 400pt
+    );
+    background-attachment: fixed;
+    background-repeat: repeat;
     color: white;
 }
 
