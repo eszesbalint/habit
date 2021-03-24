@@ -22,22 +22,63 @@ function toggle(dom_element) {
             habit_id: id,
         }
         );
-    toggle_timeout = setTimeout(function(){ request_render(year, month); }, 2000);
+    toggle_timeout = setTimeout(function(){ habit_update(id, year, month); }, 2000);
 }
 
-function request_render(year, month) {
+function habit_update(id, y, m) {
+    var hc = document.getElementById("habit-container_"+id);
+    hc.classList.add("inactive");
+    socket.emit('habit_changed', {month: [y, m], habit_id: id});
+}
+
+socket.on('habit_rendered', function(data) {
+    var hc = document.getElementById("habit-container_"+data["habit_id"]);
+    var div = document.createElement("div");
+    div.innerHTML = data["HTML"];
+    hc.parentNode.replaceChild(div.firstChild, hc);
+});
+
+function next(year, month) {
     var habit_grid = document.getElementById("habit-grid");
-    habit_grid.classList.add("inactive");
+    habit_grid.classList.remove("swipe-in-left");
+    habit_grid.classList.remove("swipe-in-right");
+    habit_grid.classList.add("swipe-out-left");
+    
     socket.emit(
         'month_changed', 
         {
             month: [year, month],
+            direction: "forwards"
         }
         );
 }
 
-socket.on('habits_rendered', function(data) {
+function previous(year, month) {
     var habit_grid = document.getElementById("habit-grid");
-    habit_grid.innerHTML = data["HTML"];
-    habit_grid.classList.remove("inactive");
+    habit_grid.classList.remove("swipe-in-left");
+    habit_grid.classList.remove("swipe-in-right");
+    habit_grid.classList.add("swipe-out-right");
+    
+    socket.emit(
+        'month_changed', 
+        {
+            month: [year, month],
+            direction: "backwards"
+        }
+        );
+}
+
+socket.on('month_rendered', function(data) {
+    clearTimeout(toggle_timeout);
+    var habit_grid = document.getElementById("habit-grid");
+    habit_grid.innerHTML = data["habits"]["HTML"];
+    habit_grid.classList.remove("swipe-out-left");
+    habit_grid.classList.remove("swipe-out-right");
+    if (data["direction"]=="forwards"){
+        habit_grid.classList.add("swipe-in-right");
+    } else {
+        habit_grid.classList.add("swipe-in-left");
+    }
+    var month = document.getElementById("month");
+    month.innerHTML = data["month"]["HTML"];
 });

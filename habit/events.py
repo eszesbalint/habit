@@ -1,39 +1,48 @@
-from datetime import date as d
+from datetime import date as D
 from flask_login import current_user
 from habit import socketio
 from flask_socketio import send, emit
+from flask import render_template
 
 from habit.habit import Habit
-from habit.month import Month as m
+from habit.month import Month as M
+
 
 @socketio.on("user_connected")
 def update_user_date(data):
-    year, month, day = data["user_date"]
-    date = d(year, month, day)
-    current_user.date = date
+    current_user.stats.date = D(*data["user_date"])
+
 
 @socketio.on("date_toggled")
 def toggle_date(data):
-    habit = Habit.query.filter_by(id=data["habit_id"]).first()
-    if habit:
-        if habit.owner == current_user:
-            year, month, day = data["date"]
-            date = d(year, month, day)
-            habit[date] = not habit[date]
-            habit.predict()
+    hs, d = (current_user.habits, D(*data["date"]))
+    h = hs.filter_by(id=data["habit_id"]).first()
+    if h:
+        h[d] = not h[d]
+
+
+@socketio.on("habit_changed")
+def render_habit(data):
+    hs, m = (current_user.habits, M(*data["month"]))
+    h = hs.filter_by(id=data["habit_id"]).first()
+    if h:
+        socketio.emit("habit_rendered",{"habit_id": h.id, "HTML":h.render(m)})
+
 
 @socketio.on("month_changed")
 def render_habits(data):
-    year, month = data["month"]
-    month = m(year, month)
-    rendered = ''.join([
-        habit.render(month) for habit in current_user.habits.all()
-        ])
+    m, d = (M(*data["month"]), data["direction"])
+    m = m.next() if d == "forwards" else m.previous()
+    print(m)
+    mhtml = render_template("month.html", month=m)
+    hhtml = current_user.render_habits(m)
     socketio.emit(
-        "habits_rendered",
+        "month_rendered",
         {
-            "HTML" : rendered
-        }
+            "month":{"HTML":mhtml},
+            "habits":{"HTML":hhtml},
+            "direction":d
+            }
         )
     
     

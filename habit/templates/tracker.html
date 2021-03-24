@@ -5,10 +5,8 @@
     <div class="nav-group">
         <a href="#" class="nav-element hover material-icons">menu</a>
     </div>
-    <div class="nav-group fill-space">
-        <a href="{{url_for('tracker', year=month.previous().year, month=month.previous().month)}}" class="nav-element hover material-icons">keyboard_arrow_left</a>
-        <span class="nav-element">{{ month.strftime("%B %Y") }}</span>
-        <a href="{{url_for('tracker', year=month.next().year, month=month.next().month)}}" class="nav-element hover material-icons">keyboard_arrow_right</a>
+    <div class="nav-group fill-space" id="month">
+        {% include "month.html" %}
     </div>
     <div class="nav-group">
         <a href="{{ url_for('new') }}" class="nav-element hover material-icons">add</a>

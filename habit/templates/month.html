@@ -1,0 +1,13 @@
+<a 
+    class="nav-element hover material-icons" 
+    onclick="previous({{ month.year }}, {{ month.month }})"
+    >
+    keyboard_arrow_left
+</a>
+<span class="nav-element">{{ month.strftime("%B %Y") }}</span>
+<a 
+    class="nav-element hover material-icons" 
+    onclick="next({{ month.year }}, {{ month.month }})"
+    >
+    keyboard_arrow_right
+</a>

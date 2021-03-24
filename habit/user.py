@@ -1,5 +1,6 @@
 from habit import db, login_manager
 from flask_login import UserMixin
+from sqlalchemy.orm import reconstructor
 import datetime
 
 from habit.habit import Habit
@@ -14,9 +15,14 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     habits = db.relationship("Habit", backref="owner", lazy="dynamic")
-    _date = datetime.date.today()
-    def __repr__(self):
-        return f"User({self.id}, {self.email})"
+    
+    def __init__(self, *args, **kwargs):
+        super(User, self).__init__(*args, **kwargs)
+        self._init_stats()
+
+    @reconstructor
+    def _init_stats(self):
+        self.stats = UserStats(self)
 
     def new_habit(self, *args, **kwargs):
         habit = Habit(*args, **kwargs, user_id=self.id)
@@ -30,13 +36,12 @@ class User(db.Model, UserMixin):
             self.habits.filter_by(id=habit_id).delete()
             db.session.commit()
 
-    @property
-    def date(self):
-        return self._date
+    def render_habits(self, month):
+        hs, m = (self.habits, month)
+        return ''.join([h.render(m) for h in hs.all()])
 
-    @date.setter
-    def date(self, date):
-        self._date = date
 
-    def render_habits(self):
-        pass
+class UserStats():
+    def __init__(self, user):
+        self.user = user
+        self.date = datetime.date.today()

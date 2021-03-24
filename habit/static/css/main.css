@@ -5,6 +5,7 @@
 @import url("collapsable.css");
 @import url("form.css");
 @import url("nav.css");
+@import url("animate.min.css");
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -27,6 +28,24 @@ small {
 
 .inactive {
     pointer-events: none;
+}
+
+.swipe-out-right {
+    animation: fadeOutRight 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.swipe-out-left {
+    animation: fadeOutLeft 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.swipe-in-right {
+    animation: fadeInRight 0.5s;
+}
+
+.swipe-in-left {
+    animation: fadeInLeft 0.5s;
 }
 
 .shadow {

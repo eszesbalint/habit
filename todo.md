@@ -11,8 +11,10 @@
 | Színek implementálása | x |
 | Nav-bar makró nélkül | x |
 | Frekvencia detektálás | x |
-| Dinamikusan megjelenített naptárak |  |
-| Prediktív tervezés |  |
+| Dinamikusan megjelenített naptárak | x |
+| Prediktív tervezés | x |
+| Dinamikus lapozás | x |
+| Menő animációk | x |
 
 
 ## Célkitűzés
@@ -34,11 +36,10 @@ A minimalizmus, mint szoftverfejlesztési szemlélet alkalmazása. Kevés funkci
     1. Email értesítések
 ## Megkötések
 - Az alkalmazás egyetlen egy oldalból álljon.
-- Maximálisan 3 szín alkalmazása.
 - A HTML fának legfeljebb 5 szintje legyen.
 - A forrás állományok hossza maximálisan 64 sor (html, css, py, js).
 - Egy függvény, metódus implementációjának hossza maximálisan 16 sor.
 - Egy css szabály maximum 16 sor.
 - Egy osztály implementációja maximálisan 32 sor.
 - Változónevek, azonosítók max 4 karakteresek függvény implementációkon belül illetver privát attribútumoknál. Ha a rövidítés nem egyértelmű, akkor kommentek használata. Az osztálynevek, modul nevek, publikus attribútumok lehetnek hosszabbak, de max 16 karakter.
-- Sorhossz max 64 karakter.
+

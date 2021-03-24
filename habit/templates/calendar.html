@@ -37,14 +37,14 @@
                     <label 
                         class="
                             day 
-                            {% if date < current_user.date %}
+                            {% if date < current_user.stats.date %}
                                 past
-                            {% elif date > current_user.date %}
+                            {% elif date > current_user.stats.date %}
                                 future
                             {% else %}
                                 today
                             {% endif %}
-                            {% if habit.predict(date) %}
+                            {% if habit.stats.predict(date) %}
                                 predicted
                             {% endif %}
                             " 

@@ -1,4 +1,4 @@
-from datetime import date as d, timedelta as td
+from datetime import date as D, timedelta as TD
 from flask import render_template, redirect, url_for
 from flask_login import (current_user, login_required, 
                         login_user, logout_user)
@@ -8,20 +8,21 @@ from habit.user import User
 from habit.forms import RegisterForm, LoginForm, HabitForm
 from habit.habit import Habit, DataBlock
 import habit.events
-from habit.month import Month as m
+from habit.month import Month as M
 
 
-@app.route("/", defaults={"year":d.today().year, 
-                          "month":d.today().month})
+@app.route("/")
 @app.route("/<int:year>/<int:month>")
 @login_required
-def tracker(year, month):
-    month = m(year, month)
+def tracker(year=None, month=None):
+    y, m = (year, month)
+    if not y or not m:
+        d = current_user.stats.date
+        y, m = d.year, d.month
+    m = M(y, m)
     return render_template(
         "tracker.html", 
-        month=month,
-        next_month=month.next(),
-        previous_month=month.previous()
+        month=m,
         )
 
 
